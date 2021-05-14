@@ -8,7 +8,6 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('static'));
 app.use('/ping', pingRouter);
 app.use('/quotes', quotesRouter);
 
