@@ -8,7 +8,7 @@
     "prepare": "husky install",
     "postinstall": "husky install",
     "lint": "eslint src/**/*.js",
-    "start": "nodemon --ignore client/ --exec babel-node -r dotenv/config src/main.js",
+    "start": "nodemon --ignore client/ --ignore static/ --exec babel-node -r dotenv/config src/main.js",
     "build": "babel ./src/main.js -d dist"
   },
   "keywords": [],
