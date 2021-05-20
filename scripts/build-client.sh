@@ -1,15 +1,27 @@
 #!/bin/bash
 
-baseLocation="/d/cdp/devOps/quote-service"
-sourceLocation="$baseLocation/client"
-buildLocation="$baseLocation/static"
-distLocation="$baseLocation/dist"
-buildArchive="$distLocation/client-app.zip"
+scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+baseLocation=${scriptDir%scripts}
+sourceLocation="${baseLocation}client/"
+buildLocation="${baseLocation}static/"
+distLocation="${baseLocation}dist/"
+buildArchive="${distLocation}client-app.zip"
+envFile="${baseLocation}.env"
+
+if [[ ! -f "$envFile" ]]; then
+  echo ".env file is not found in $baseLocation"
+  exit 1
+fi
 
 # export all env vars
 set -o allexport
-source "$baseLocation/.env"
+source $envFile
 set +o allexport
+
+if [[ -z $ENV_CONFIGURATION ]]; then
+  echo 'missing ENV_CONFIGURATION property in .env file'
+  exit 1
+fi
 
 # build client
 npm --prefix $sourceLocation run build:$ENV_CONFIGURATION

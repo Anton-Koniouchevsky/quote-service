@@ -1,17 +1,18 @@
 #!/bin/bash
 
-location="/d/cdp/devOps/quote-service"
-DBFile="$location/data/users.db"
+scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+location=${scriptDir%scripts}
+DBFile="${location}data/users.db"
 
 help() {
-  echo "Supported commands are:"
-  echo "- help    -> Prints instructions how to use this script with description of all available commands"
-  echo "- add     -> Adds a new line to the users.db"
-  echo "- backup  -> Creates a new file, named %date%-users.db.backup which is a copy of current users.db"
-  echo "- restore -> Takes last created backup file and replaces users.db with it."
-  echo "- find    -> Prompts user to type a username, then prints username and role if such exists in users.db"
-  echo "- list    -> Prints contents of users.db in format: N. username, role"
-  echo "             Accepts an additional optional parameter inverse which allows to get result in an opposite order"
+  echo "Supported commands are:
+  - help    -> Prints instructions how to use this script with description of all available commands
+  - add     -> Adds a new line to the users.db
+  - backup  -> Creates a new file, named %date%-users.db.backup which is a copy of current users.db
+  - restore -> Takes last created backup file and replaces users.db with it.
+  - find    -> Prompts user to type a username, then prints username and role if such exists in users.db
+  - list    -> Prints contents of users.db in format: N. username, role
+               Accepts an additional optional parameter inverse which allows to get result in an opposite order"
 }
 
 checkDBExistence() {
@@ -27,6 +28,7 @@ checkDBExistence() {
         n|N )
           echo "We are unable to proceed without db file";
           exit 1 ;;
+        * ) echo "Only y or n allowed!";;
       esac
     done
   fi
@@ -78,20 +80,19 @@ find() {
 
   enterLatinsOnly "username"
   username=$input
+  hasMatch=false
 
   IFS=", "
   while read -r name role;
   do
     if [[ $name == $username ]]; then
-      match="User: $name; Role: $role"
-      break
+      echo "User: $name; Role: $role"
+      hasMatch=true
     fi
   done < $DBFile
 
-  if [[ -z $match ]]; then
+  if [[ "$hasMatch" = false ]]; then
     echo "User not found"
-  else
-    echo $match
   fi
 }
 
@@ -102,7 +103,7 @@ list() {
 
   if [[ "$1" == "inverse" ]]; then
     for ((i = ${#rows[@]} - 1 ; i >= 0 ; i--)); do
-      echo "$(($i + 1)). ${rows[$i - 1]}"
+      echo "$(($i + 1)). ${rows[$i]}"
     done
   else
     for ((i = 1 ; i <= ${#rows[@]} ; i++)); do
