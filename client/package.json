@@ -10,7 +10,8 @@
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage",
     "test:clear-cache": "jest --clearCache",
-    "build": "ng build --output-path ../static",
+    "build:dev": "ng build --output-path ../static",
+    "build:prod": "ng build --output-path ../static --configuration=production",
     "release": "standard-version",
     "e2e": "ng e2e"
   },
