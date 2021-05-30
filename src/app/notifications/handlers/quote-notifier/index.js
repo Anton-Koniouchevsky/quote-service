@@ -1,4 +1,4 @@
-const { SES } = require('aws-sdk');
+const { SES, SNS } = require('aws-sdk');
 
 const sendEmail = async ({ email, quote }) => {
   console.log('quote-service', 'sendEmail', email, quote);
@@ -31,6 +31,16 @@ const sendEmail = async ({ email, quote }) => {
 
 const sendSMS = async ({ phone, quote }) => {
   console.log('quote-service', 'sendSMS', phone, quote);
+
+  const snsClient = new SNS({
+    region: 'eu-west-1',
+    apiVersion: '2010-03-31',
+  });
+
+  return snsClient.publish({
+    Message: `${quote.text}. ${quote.author}`,
+    PhoneNumber: phone,
+  }).promise();
 };
 
 exports.handler = async (event) => {
@@ -46,9 +56,9 @@ exports.handler = async (event) => {
     }
 
     if (body.email) {
-      await sendEmail(body);
+      response.status = await sendEmail(body);
     } else if (body.phone) {
-      await sendSMS(body);
+      response.status = await sendSMS(body);
     } else {
       throw new Error('unknown notification method');
     }
