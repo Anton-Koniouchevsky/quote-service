@@ -1,4 +1,7 @@
-import app from './app';
+import dotenv from 'dotenv';
+import app from './app/index';
+
+dotenv.config();
 
 const server = app.listen(process.env.APP_PORT, () => {
   console.log(`Example app listening at http://localhost:${process.env.APP_PORT}`);
