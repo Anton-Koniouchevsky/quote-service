@@ -31,7 +31,16 @@ docker build ./nginx-configuration -t <IMAGE_NAME>
 docker run --rm -ti -p 80:80 -p 443:443 -p 3000:3000 <IMAGE_NAME>
 ```
 
-## All together
+## Run all together
 ```bash
 docker-compose up --build
+```
+
+## Scripts
+```bash
+scripts/build-back-and-publish.sh
+scripts/build-client.sh
+scripts/create-lifecycle-policies.sh
+scripts/create-stage-image.sh <STAGE_NAME>
+scripts/db.sh
 ```
