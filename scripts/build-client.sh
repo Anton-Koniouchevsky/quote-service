@@ -3,7 +3,7 @@
 scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 baseLocation=${scriptDir%scripts}
 sourceLocation="${baseLocation}client/"
-buildLocation="${baseLocation}static/"
+buildLocation="${baseLocation}nginx-configuration/static/"
 distLocation="${baseLocation}dist/"
 buildArchive="${distLocation}client-app.zip"
 envFile="${baseLocation}.env"

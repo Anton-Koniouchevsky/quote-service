@@ -2,7 +2,8 @@
 
 # compiled output
 /dist
-/static
+nginx-configuration/static
+nginx-configuration/keys
 /tmp
 /out-tsc
 # Only exists if Bazel was run
