@@ -3,8 +3,6 @@ version: 0.2
 env:
   variables:
     BUILD_ENV: "dev"
-    S3_BUCKET: "quote-app-build"
-    CLOUDFRONT_DIST_ID: ""
 
 phases:
   install:
@@ -30,30 +28,6 @@ phases:
       - echo Build started on `date`
       - npm --prefix ./client run build:${BUILD_ENV}
       - echo Application build is successfully completed on `date`
-
-
-  # post_build:
-    # commands:
-      # - echo Application deployment is started on `date`
-
-      # - aws configure set preview.cloudfront true
-
-      # Copy the maintenance page to S3 bucket:
-      # - aws s3 cp ./client/maintenance/index.html s3://${S3_BUCKET}/index.html
-      # Invalidate CloudFront cache
-      # - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DIST_ID} --paths "/index.html"
-
-      # Clear S3 bucket:
-      # - aws s3 rm s3://${S3_BUCKET} --recursive --exclude "index.html"
-      # - echo S3 bucket is cleared.
-
-      # Copy dist folder to S3 bucket:
-      # - aws s3 cp ./client/dist s3://${S3_BUCKET} --recursive
-
-      # Create CloudFront invalidation (which actually clears cache):
-      # - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DIST_ID} --paths "/*"
-
-      # - echo Application deployment is successfully completed on `date`
 
 artifacts:
   files:
