@@ -51,7 +51,8 @@ phases:
     commands:
       # Upload test coverage report to CodeCov and CodeClimate.
       - curl -s https://codecov.io/bash | bash -s - -t $(echo $CODECOV_TOKEN) -f ${CODECOV_COVERAGE_REPORT_PATH}
-      - ./client/cc-test-reporter after-build -t lcov -p ./client -r $(echo $CODE_CLIMATE_REPORTER_ID) --exit-code $?
+      - ./client/cc-test-reporter format-coverage -t lcov ./client/coverage/lcov.info
+      - ./client/cc-test-reporter upload-coverage
 
 cache:
   paths:
