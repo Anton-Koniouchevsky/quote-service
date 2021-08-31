@@ -4,7 +4,7 @@ env:
   variables:
     GIT_BRANCH: task-cicd-fe
     CI_NAME: CodeBuild
-    CODE_CLIMATE_REPORTER_ID: "ca70f50e6f9b5efb61e6b9eb96a417e1da21540d"
+    CC_TEST_REPORTER_ID: "ac06c13b01410b2ac603fc487a726a1a17b14d58d0ccea9132818cbccc3e18c8"
     CODECOV_TOKEN: "2ada1af4-723c-4df3-9527-c24adea3b6b3"
     CODECOV_COVERAGE_REPORT_PATH: "./client/coverage/lcov.info"
 
