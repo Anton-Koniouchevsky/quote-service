@@ -30,29 +30,30 @@ phases:
 
       # Install @angular/cli and app dependencies.
       - echo Installing source NPM dependencies...
+      - cd client
       - npm install -g @angular/cli
-      - npm --prefix ./client install
+      - npm install
 
       # Set up all necessary/required env variables and Install CodeClimate reporter.
       - export GIT_COMMIT_SHA="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION)"
       - export GIT_COMMITTED_AT="$(date +%s)"
-      - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./client/cc-test-reporter
-      - chmod +x ./client/cc-test-reporter
-      - ./client/cc-test-reporter before-build
+      - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - chmod +x ./cc-test-reporter
+      - ./cc-test-reporter before-build
 
   build:
     commands:
       # Run code quality tools.
       - echo Running code quality checks...
-      - npm --prefix ./client run lint
-      - npm --prefix ./client run test:coverage
+      - npm run lint
+      - npm run test:coverage
 
   post_build:
     commands:
       # Upload test coverage report to CodeCov and CodeClimate.
       - curl -s https://codecov.io/bash | bash -s - -t $(echo $CODECOV_TOKEN) -f ${CODECOV_COVERAGE_REPORT_PATH}
-      - ./client/cc-test-reporter format-coverage -t lcov ./client/coverage/lcov.info
-      - ./client/cc-test-reporter upload-coverage
+      - ./cc-test-reporter format-coverage -t lcov ./coverage/lcov.info
+      - ./cc-test-reporter upload-coverage
 
 cache:
   paths:
