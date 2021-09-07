@@ -14,7 +14,7 @@ COPY src/ ./src/
 RUN npm run build
 
 # Release
-FROM "821845795844.dkr.ecr.eu-west-1.amazonaws.com/base-images:node-14-17.5-alpine"
+FROM node:14-alpine
 WORKDIR usr/src/app
 COPY --from=dependencies /usr/src/app/package.json ./
 RUN npm prune --production && npm install --only=production && rm package-lock.json
