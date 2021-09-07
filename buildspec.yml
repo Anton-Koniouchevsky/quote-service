@@ -5,9 +5,9 @@ phases:
     - echo Logging in to Amazon ECR....
     - aws --version
     # update the following line with your own region
-    - aws ecr get-login-password --region eu-west-1
     - CREATED_AT="$(date +%s)"
     - STORAGE=821845795844.dkr.ecr.eu-west-1.amazonaws.com/backend-builds
+    - aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $STORAGE
   build:
     commands:
     - echo Build started on `date`
