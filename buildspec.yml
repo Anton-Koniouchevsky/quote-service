@@ -21,7 +21,7 @@ phases:
     - docker push $STORAGE:latest
     - docker push $STORAGE:$CREATED_AT
     - echo Writing image definitions file...
-    - printf '{"name": "quote-service", "imageUri":"%s"}' $STORAGE:$CREATED_AT > image-def.json
+    - printf '{"name":"quote-service","imageUri":"%s"}' $STORAGE:$CREATED_AT > image-def.json
 artifacts:
   files:
     - image-def.json
