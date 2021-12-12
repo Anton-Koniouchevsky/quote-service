@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  isAuthorizationEnabled: false,
+  isAuthorizationEnabled: true,
   apiUrls: {
-    auth: '',
+    auth: 'https://localhost:3000',
     quote: 'https://localhost:3000', // Put here your QUOTE API BASE URL. E.g.: api or https://quote.com/api
     share: 'https://smxultzyo0.execute-api.eu-west-1.amazonaws.com/dev', // Put here your SHARE API BASE URL. E.g.: api or https://share.com/api
   },

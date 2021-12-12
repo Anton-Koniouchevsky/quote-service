@@ -6,9 +6,9 @@ Part of Cloud and DevOps for JS developers mentoring program.
 ### Installation
 
 ```bash
-cd /client
+cd client/
 npm install
-npm run build
+npm run build:dev
 ```
 
 ## Server
