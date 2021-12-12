@@ -1,0 +1,28 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+    - echo Logging in to Amazon ECR....
+    - aws --version
+    # update the following line with your own region
+    - CREATED_AT="$(date +%s)"
+    - STORAGE=821845795844.dkr.ecr.eu-west-1.amazonaws.com/backend-builds
+    - aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $STORAGE
+  build:
+    commands:
+    - echo Build started on `date`
+    - echo Building the Docker image...
+    - docker build -t $STORAGE:latest .
+    - docker tag $STORAGE:latest $STORAGE:$CREATED_AT
+  post_build:
+    commands:
+    - echo Build completed on `date`
+    - echo pushing to repo
+    - docker push $STORAGE:latest
+    - docker push $STORAGE:$CREATED_AT
+    - echo Writing image definitions file...
+    - printf '{"name":"quote-service","imageUri":"%s"}' $STORAGE:$CREATED_AT > image-def.json
+    - cat image-def.json
+artifacts:
+  files:
+    - image-def.json
